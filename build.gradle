@@ -4,6 +4,7 @@ plugins {
 	id 'java'
 	id 'com.palantir.git-version' version '0.12.3'
 	id 'com.palantir.docker' version '0.27.0'
+	id 'jacoco'
 }
 
 group = 'com.accesso'
@@ -21,5 +22,13 @@ dependencies {
 
 test {
 	useJUnitPlatform()
-	print version
+}
+
+docker {
+	name "robsoncassol/gradle-poc:${version}"
+	files tasks.jar.outputs
+	dockerfile file('Dockerfile')
+	tag 'dockerHub', "hub.docker.com/repository/docker/robsoncassol/gradle-poc:${version}"
+	pull true
+	noCache true
 }
