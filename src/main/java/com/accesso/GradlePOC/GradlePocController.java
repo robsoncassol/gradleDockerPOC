@@ -9,8 +9,8 @@ public class GradlePocController {
 
     @GetMapping("hello")
     public String helloWorld(){
-        return "Hello world";
 
+        return "Hello world";
     }
 
 }
