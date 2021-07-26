@@ -37,11 +37,7 @@ task customVersion {
 
 	doLast {
 		def details = versionDetails()
-		println details.lastTag
-		println details.commitDistance
-		println details.gitHash
-		println details.branchName
-		println details.isCleanTag
+		println details
 		println version
 		def customVersion = version
 		if(details.commitDistance > 0)
