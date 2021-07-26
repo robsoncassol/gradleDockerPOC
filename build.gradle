@@ -24,11 +24,34 @@ test {
 }
 
 docker {
-	name "robsoncassol/gradle-poc:${version}"
+	name "hub.docker.com/repository/docker/robsoncassol/gradle-poc:${version}"
 	files tasks.jar.outputs
 	dockerfile file('Dockerfile')
-	tag 'dockerHub', "hub.docker.com/repository/docker/robsoncassol/gradle-poc:${version}"
+	tags 'latest', 'another'
+	tag 'bla', "gradle-poc:${version}"
 	pull true
 	noCache true
+}
+
+task customVersion {
+
+	doLast {
+		def details = versionDetails()
+		println details.lastTag
+		println details.commitDistance
+		println details.gitHash
+		println details.branchName
+		println details.isCleanTag
+		def customVersion = version
+		if(details.commitDistance > 0)
+		{
+			customVersion = "${details.lastTag}-Dev.${details.commitDistance}-${details.gitHash}";
+		}
+		if(!details.isCleanTag )
+		{
+			customVersion = customVersion.replace("dirty", "uncommitted")
+		}
+		println customVersion
+	}
 }
 
