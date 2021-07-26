@@ -42,14 +42,20 @@ task customVersion {
 		println details.gitHash
 		println details.branchName
 		println details.isCleanTag
+		println version
 		def customVersion = version
 		if(details.commitDistance > 0)
 		{
 			customVersion = "${details.lastTag}-Dev.${details.commitDistance}-${details.gitHash}";
 		}
-		if(!details.isCleanTag )
+		if(!details.isCleanTag)
 		{
-			customVersion = customVersion.replace("dirty", "uncommitted")
+			if(customVersion.contains("dirty")){
+				customVersion = customVersion.replace("dirty", "uncommitted")
+			}else{
+				customVersion += ".uncommitted"
+			}
+
 		}
 		println customVersion
 	}
